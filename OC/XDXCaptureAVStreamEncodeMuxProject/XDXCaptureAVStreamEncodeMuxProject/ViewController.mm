@@ -11,11 +11,16 @@
 #import "XDXCameraModel.h"
 #import "XDXCameraHandler.h"
 #import "XDXAudioCaptureManager.h"
+#import "XDXAduioEncoder.h"
 
 @interface ViewController ()<XDXCameraHandlerDelegate, XDXAudioCaptureDelegate>
 
+// Capture
 @property (nonatomic, strong) XDXCameraHandler              *cameraCaptureHandler;
 @property (nonatomic, strong) XDXAudioCaptureManager        *audioCaptureHandler;
+
+// Encoder
+@property (nonatomic, strong) XDXAduioEncoder *audioEncoder;
 
 @end
 
@@ -27,6 +32,7 @@
     
     [self configureCamera];
     [self configureAudioCapture];
+    [self configureAudioEncoder];
 }
 
 - (void)configureCamera {
@@ -59,6 +65,13 @@
     self.audioCaptureHandler = handler;
 }
 
+- (void)configureAudioEncoder {
+    AudioStreamBasicDescription audioDataFormat = [[XDXAudioCaptureManager getInstance] getAudioDataFormat];
+    self.audioEncoder = [[XDXAduioEncoder alloc] initWithSourceFormat:audioDataFormat
+                                                         destFormatID:kAudioFormatMPEG4AAC
+                                                           sampleRate:44100
+                                                  isUseHardwareEncode:YES];
+}
 #pragma mark - Delegate
 
 #pragma mark Camera Capture
@@ -71,7 +84,11 @@
 
 #pragma mark Audio Capture
 - (void)receiveAudioDataByDevice:(XDXCaptureAudioDataRef)audioDataRef {
-    
+    [self.audioEncoder encodeAudioWithSourceBuffer:audioDataRef->data
+                                  sourceBufferSize:audioDataRef->size
+                                   completeHandler:^(AudioBufferList * _Nonnull destBufferList, UInt32 outputPackets, AudioStreamPacketDescription * _Nonnull outputPacketDescriptions) {
+                                       free(destBufferList->mBuffers->mData);
+                                   }];
 }
 
 @end

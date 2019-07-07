@@ -6,7 +6,7 @@
 //  Copyright © 2019 小东邪. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 #import "XDXSingleton.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -36,10 +36,9 @@ SingletonH
 + (instancetype)getInstance;
 - (void)startAudioCapture;
 - (void)stopAudioCapture;
-
-- (void)stopRecordFile;
-- (void)startRecordFile;
 - (void)freeAudioUnit;
+
+- (AudioStreamBasicDescription)getAudioDataFormat;
 
 @end
 

@@ -8,7 +8,6 @@
 
 #import "XDXAudioCaptureManager.h"
 #import <AudioToolbox/AudioToolbox.h>
-#import <AVFoundation/AVFoundation.h>
 
 #define kXDXAudioPCMFramesPerPacket 1
 #define KXDXAudioBitsPerChannel 16
@@ -86,6 +85,10 @@ static OSStatus AudioCaptureCallback(void                       *inRefCon,
 - (void)freeAudioUnit {
     [self freeAudioUnit:m_audioUnit];
     self.isRunning = NO;
+}
+
+- (AudioStreamBasicDescription)getAudioDataFormat {
+    return m_audioDataFormat;
 }
 
 #pragma mark - Init
