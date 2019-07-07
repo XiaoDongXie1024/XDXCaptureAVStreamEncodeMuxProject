@@ -29,6 +29,10 @@
 		2335485822D1A4F900F4F57D /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335485722D1A4F900F4F57D /* libz.tbd */; };
 		2335485A22D1A50000F4F57D /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335485922D1A50000F4F57D /* libiconv.tbd */; };
 		2335485C22D1A50700F4F57D /* libbz2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2335485B22D1A50700F4F57D /* libbz2.tbd */; };
+		2335486522D1A5E800F4F57D /* NSObject+YYModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486222D1A5E800F4F57D /* NSObject+YYModel.m */; };
+		2335486622D1A5E800F4F57D /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486322D1A5E800F4F57D /* YYClassInfo.m */; };
+		2335486B22D1A61900F4F57D /* XDXCameraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486722D1A61900F4F57D /* XDXCameraModel.m */; };
+		2335486C22D1A61900F4F57D /* XDXCameraHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486A22D1A61900F4F57D /* XDXCameraHandler.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -175,6 +179,15 @@
 		2335485722D1A4F900F4F57D /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		2335485922D1A50000F4F57D /* libiconv.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libiconv.tbd; path = usr/lib/libiconv.tbd; sourceTree = SDKROOT; };
 		2335485B22D1A50700F4F57D /* libbz2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libbz2.tbd; path = usr/lib/libbz2.tbd; sourceTree = SDKROOT; };
+		2335486022D1A5E800F4F57D /* YYClassInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYClassInfo.h; sourceTree = "<group>"; };
+		2335486122D1A5E800F4F57D /* YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YYModel.h; sourceTree = "<group>"; };
+		2335486222D1A5E800F4F57D /* NSObject+YYModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+YYModel.m"; sourceTree = "<group>"; };
+		2335486322D1A5E800F4F57D /* YYClassInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YYClassInfo.m; sourceTree = "<group>"; };
+		2335486422D1A5E800F4F57D /* NSObject+YYModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+YYModel.h"; sourceTree = "<group>"; };
+		2335486722D1A61900F4F57D /* XDXCameraModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XDXCameraModel.m; sourceTree = "<group>"; };
+		2335486822D1A61900F4F57D /* XDXCameraModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XDXCameraModel.h; sourceTree = "<group>"; };
+		2335486922D1A61900F4F57D /* XDXCameraHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XDXCameraHandler.h; sourceTree = "<group>"; };
+		2335486A22D1A61900F4F57D /* XDXCameraHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XDXCameraHandler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -224,6 +237,7 @@
 		233547A322D1A2D800F4F57D /* XDXCaptureAVStreamEncodeMuxProject */ = {
 			isa = PBXGroup;
 			children = (
+				2335485D22D1A5C700F4F57D /* Capture */,
 				233547BA22D1A3C100F4F57D /* 3rd */,
 				233547A422D1A2D800F4F57D /* AppDelegate.h */,
 				233547A522D1A2D800F4F57D /* AppDelegate.m */,
@@ -241,6 +255,7 @@
 		233547BA22D1A3C100F4F57D /* 3rd */ = {
 			isa = PBXGroup;
 			children = (
+				2335485F22D1A5E800F4F57D /* YYModel */,
 				233547BB22D1A3C100F4F57D /* FFmpeg-iOS */,
 				2335484322D1A3C100F4F57D /* XDXSingleton.h */,
 				2335484422D1A3C100F4F57D /* log4cplus.h */,
@@ -481,6 +496,37 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		2335485D22D1A5C700F4F57D /* Capture */ = {
+			isa = PBXGroup;
+			children = (
+				2335485E22D1A5D100F4F57D /* Video */,
+			);
+			path = Capture;
+			sourceTree = "<group>";
+		};
+		2335485E22D1A5D100F4F57D /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				2335486922D1A61900F4F57D /* XDXCameraHandler.h */,
+				2335486A22D1A61900F4F57D /* XDXCameraHandler.m */,
+				2335486822D1A61900F4F57D /* XDXCameraModel.h */,
+				2335486722D1A61900F4F57D /* XDXCameraModel.m */,
+			);
+			path = Video;
+			sourceTree = "<group>";
+		};
+		2335485F22D1A5E800F4F57D /* YYModel */ = {
+			isa = PBXGroup;
+			children = (
+				2335486022D1A5E800F4F57D /* YYClassInfo.h */,
+				2335486122D1A5E800F4F57D /* YYModel.h */,
+				2335486222D1A5E800F4F57D /* NSObject+YYModel.m */,
+				2335486322D1A5E800F4F57D /* YYClassInfo.m */,
+				2335486422D1A5E800F4F57D /* NSObject+YYModel.h */,
+			);
+			path = YYModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -554,6 +600,10 @@
 				233547A922D1A2D800F4F57D /* ViewController.mm in Sources */,
 				233547B422D1A2D900F4F57D /* main.m in Sources */,
 				233547A622D1A2D800F4F57D /* AppDelegate.m in Sources */,
+				2335486B22D1A61900F4F57D /* XDXCameraModel.m in Sources */,
+				2335486622D1A5E800F4F57D /* YYClassInfo.m in Sources */,
+				2335486C22D1A61900F4F57D /* XDXCameraHandler.m in Sources */,
+				2335486522D1A5E800F4F57D /* NSObject+YYModel.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
