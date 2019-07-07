@@ -12,15 +12,17 @@
 #import "XDXCameraHandler.h"
 #import "XDXAudioCaptureManager.h"
 #import "XDXAduioEncoder.h"
+#import "XDXVideoEncoder.h"
 
-@interface ViewController ()<XDXCameraHandlerDelegate, XDXAudioCaptureDelegate>
+@interface ViewController ()<XDXCameraHandlerDelegate, XDXAudioCaptureDelegate, XDXVideoEncoderDelegate>
 
 // Capture
-@property (nonatomic, strong) XDXCameraHandler              *cameraCaptureHandler;
-@property (nonatomic, strong) XDXAudioCaptureManager        *audioCaptureHandler;
+@property (nonatomic, strong) XDXCameraHandler       *cameraCaptureHandler;
+@property (nonatomic, strong) XDXAudioCaptureManager *audioCaptureHandler;
 
 // Encoder
 @property (nonatomic, strong) XDXAduioEncoder *audioEncoder;
+@property (nonatomic, strong) XDXVideoEncoder *videoEncoder;
 
 @end
 
@@ -33,6 +35,7 @@
     [self configureCamera];
     [self configureAudioCapture];
     [self configureAudioEncoder];
+    [self configurevideoEncoder];
 }
 
 - (void)configureCamera {
@@ -72,10 +75,32 @@
                                                            sampleRate:44100
                                                   isUseHardwareEncode:YES];
 }
+
+- (void)configurevideoEncoder {
+    
+    // You could select h264 / h265 encoder.
+    self.videoEncoder = [[XDXVideoEncoder alloc] initWithWidth:1280
+                                                        height:720
+                                                           fps:30
+                                                       bitrate:2048
+                                       isSupportRealTimeEncode:NO
+                                                   encoderType:XDXH265Encoder]; // XDXH264Encoder
+    self.videoEncoder.delegate = self;
+    [self.videoEncoder configureEncoderWithWidth:1280 height:720];
+}
+
 #pragma mark - Delegate
 
 #pragma mark Camera Capture
 - (void)xdxCaptureOutput:(AVCaptureOutput *)output didOutputSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    if ([output isKindOfClass:[AVCaptureVideoDataOutput class]] == YES) {
+        if (self.videoEncoder) {
+            [self.videoEncoder startEncodeDataWithBuffer:sampleBuffer
+                                        isNeedFreeBuffer:NO];
+            
+        }
+        
+    }
 }
 
 - (void)xdxCaptureOutput:(AVCaptureOutput *)output didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
@@ -89,6 +114,15 @@
                                    completeHandler:^(AudioBufferList * _Nonnull destBufferList, UInt32 outputPackets, AudioStreamPacketDescription * _Nonnull outputPacketDescriptions) {
                                        free(destBufferList->mBuffers->mData);
                                    }];
+}
+
+#pragma mark Video Encoder
+- (void)receiveVideoEncoderData:(XDXVideEncoderDataRef)dataRef {
+    if (dataRef->isKeyFrame) {
+        
+    }else {
+        
+    }
 }
 
 @end
