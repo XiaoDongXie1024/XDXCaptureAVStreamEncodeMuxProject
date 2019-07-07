@@ -10,10 +10,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import "XDXCameraModel.h"
 #import "XDXCameraHandler.h"
+#import "XDXAudioCaptureManager.h"
 
-@interface ViewController ()<XDXCameraHandlerDelegate>
+@interface ViewController ()<XDXCameraHandlerDelegate, XDXAudioCaptureDelegate>
 
-@property (nonatomic, strong) XDXCameraHandler              *cameraHandler;
+@property (nonatomic, strong) XDXCameraHandler              *cameraCaptureHandler;
+@property (nonatomic, strong) XDXAudioCaptureManager        *audioCaptureHandler;
 
 @end
 
@@ -24,6 +26,7 @@
     // Do any additional setup after loading the view.
     
     [self configureCamera];
+    [self configureAudioCapture];
 }
 
 - (void)configureCamera {
@@ -43,10 +46,17 @@
                                              isEnableVideoStabilization:YES];
     
     XDXCameraHandler *handler   = [[XDXCameraHandler alloc] init];
-    self.cameraHandler          = handler;
+    self.cameraCaptureHandler   = handler;
     handler.delegate            = self;
     [handler configureCameraWithModel:model];
     [handler startRunning];
+}
+
+- (void)configureAudioCapture {
+    XDXAudioCaptureManager *handler = [XDXAudioCaptureManager getInstance];
+    handler.delegate = self;
+    [handler startAudioCapture];
+    self.audioCaptureHandler = handler;
 }
 
 #pragma mark - Delegate
@@ -56,6 +66,11 @@
 }
 
 - (void)xdxCaptureOutput:(AVCaptureOutput *)output didDropSampleBuffer:(CMSampleBufferRef)sampleBuffer fromConnection:(AVCaptureConnection *)connection {
+    
+}
+
+#pragma mark Audio Capture
+- (void)receiveAudioDataByDevice:(XDXCaptureAudioDataRef)audioDataRef {
     
 }
 

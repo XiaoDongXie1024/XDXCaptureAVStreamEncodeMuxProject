@@ -33,6 +33,7 @@
 		2335486622D1A5E800F4F57D /* YYClassInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486322D1A5E800F4F57D /* YYClassInfo.m */; };
 		2335486B22D1A61900F4F57D /* XDXCameraModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486722D1A61900F4F57D /* XDXCameraModel.m */; };
 		2335486C22D1A61900F4F57D /* XDXCameraHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486A22D1A61900F4F57D /* XDXCameraHandler.m */; };
+		2335487022D1A9F800F4F57D /* XDXAudioCaptureManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2335486F22D1A9F800F4F57D /* XDXAudioCaptureManager.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -188,6 +189,8 @@
 		2335486822D1A61900F4F57D /* XDXCameraModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XDXCameraModel.h; sourceTree = "<group>"; };
 		2335486922D1A61900F4F57D /* XDXCameraHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XDXCameraHandler.h; sourceTree = "<group>"; };
 		2335486A22D1A61900F4F57D /* XDXCameraHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XDXCameraHandler.m; sourceTree = "<group>"; };
+		2335486E22D1A9F800F4F57D /* XDXAudioCaptureManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XDXAudioCaptureManager.h; sourceTree = "<group>"; };
+		2335486F22D1A9F800F4F57D /* XDXAudioCaptureManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XDXAudioCaptureManager.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,6 +502,7 @@
 		2335485D22D1A5C700F4F57D /* Capture */ = {
 			isa = PBXGroup;
 			children = (
+				2335486D22D1A9F800F4F57D /* Audio */,
 				2335485E22D1A5D100F4F57D /* Video */,
 			);
 			path = Capture;
@@ -525,6 +529,15 @@
 				2335486422D1A5E800F4F57D /* NSObject+YYModel.h */,
 			);
 			path = YYModel;
+			sourceTree = "<group>";
+		};
+		2335486D22D1A9F800F4F57D /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				2335486E22D1A9F800F4F57D /* XDXAudioCaptureManager.h */,
+				2335486F22D1A9F800F4F57D /* XDXAudioCaptureManager.m */,
+			);
+			path = Audio;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -597,6 +610,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2335487022D1A9F800F4F57D /* XDXAudioCaptureManager.m in Sources */,
 				233547A922D1A2D800F4F57D /* ViewController.mm in Sources */,
 				233547B422D1A2D900F4F57D /* main.m in Sources */,
 				233547A622D1A2D800F4F57D /* AppDelegate.m in Sources */,
