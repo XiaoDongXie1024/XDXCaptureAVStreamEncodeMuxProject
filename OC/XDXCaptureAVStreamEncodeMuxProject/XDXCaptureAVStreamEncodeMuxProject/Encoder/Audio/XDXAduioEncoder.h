@@ -11,6 +11,14 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+struct XDXAudioEncderData {
+    void    *data;
+    int     size;
+    int64_t pts;
+};
+
+typedef struct XDXAudioEncderData *XDXAudioEncderDataRef;
+
 @interface XDXAduioEncoder : NSObject
 {
     @public
@@ -35,11 +43,13 @@ NS_ASSUME_NONNULL_BEGIN
  Encode Audio Data
  @param sourceBuffer source audio data
  @param sourceBufferSize source audio data size
+ @param pts audio data timestamp
  @param completeHandler get audio data after encoding
  */
 - (void)encodeAudioWithSourceBuffer:(void *)sourceBuffer
                    sourceBufferSize:(UInt32)sourceBufferSize
-                    completeHandler:(void(^)(AudioBufferList *destBufferList, UInt32 outputPackets, AudioStreamPacketDescription *outputPacketDescriptions))completeHandler;
+                                pts:(int64_t)pts
+                    completeHandler:(void(^)(XDXAudioEncderDataRef audioDataRef))completeHandler;
 
 
 - (void)freeEncoder;

@@ -17,8 +17,10 @@ typedef enum : NSUInteger {
 
 struct XDXVideEncoderData {
     BOOL     isKeyFrame;
+    BOOL     isExtraData;
     uint8_t  *data;
     size_t   size;
+    int64_t  timestamp;
 };
 
 typedef struct XDXVideEncoderData* XDXVideEncoderDataRef;

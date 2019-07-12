@@ -12,8 +12,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 struct XDXCaptureAudioData {
-    void *data;
-    int  size;
+    void    *data;
+    int     size;
+    int64_t pts;
 };
 
 typedef struct XDXCaptureAudioData* XDXCaptureAudioDataRef;

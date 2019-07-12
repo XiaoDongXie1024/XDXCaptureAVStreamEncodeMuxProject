@@ -11,7 +11,7 @@
 #import <AVFoundation/AVFoundation.h>
 #include "log4cplus.h"
 
-uint32_t g_capture_base_time = 0;
+uint32_t g_av_base_time = 0;
 
 static const size_t  kStartCodeLength = 4;
 static const uint8_t kStartCode[]     = {0x00, 0x00, 0x00, 0x01};
@@ -63,8 +63,8 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
     CMTime dts = CMSampleBufferGetDecodeTimeStamp(sampleBuffer);
     
     // Use our define time. (the time is used to sync audio and video)
-    int64_t ptsAfter = (int64_t)((CMTimeGetSeconds(pts) - g_capture_base_time) * 1000);
-    int64_t dtsAfter = (int64_t)((CMTimeGetSeconds(dts) - g_capture_base_time) * 1000);
+    int64_t ptsAfter = (int64_t)((CMTimeGetSeconds(pts) - g_av_base_time) * 1000);
+    int64_t dtsAfter = (int64_t)((CMTimeGetSeconds(dts) - g_av_base_time) * 1000);
     dtsAfter = ptsAfter;
     
     /*sometimes relative dts is zero, provide a workground to restore dts*/
@@ -131,9 +131,11 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
         }
         
         struct XDXVideEncoderData encoderData = {
-            .isKeyFrame = YES,
-            .data       = keyParameterSetBuffer,
-            .size       = keyParameterSetBufferSize,
+            .isKeyFrame  = NO,
+            .isExtraData = YES,
+            .data        = keyParameterSetBuffer,
+            .size        = keyParameterSetBufferSize,
+            .timestamp   = dtsAfter,
         };
         
         if ([encoder.delegate respondsToSelector:@selector(receiveVideoEncoderData:)]) {
@@ -158,9 +160,11 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
     }
     
     struct XDXVideEncoderData encoderData = {
-        .isKeyFrame = NO,
-        .data       = bufferDataPointer,
-        .size       = blockBufferLength,
+        .isKeyFrame  = isKeyFrame,
+        .isExtraData = NO,
+        .data        = bufferDataPointer,
+        .size        = blockBufferLength,
+        .timestamp   = dtsAfter,
     };
     
     if ([encoder.delegate respondsToSelector:@selector(receiveVideoEncoderData:)]) {
@@ -220,7 +224,7 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
                                                  fps:self.fps
                                              bitrate:self.bitrate
                              isSupportRealtimeEncode:self.isSupportRealTimeEncode
-                                      iFrameDuration:30
+                                      iFrameDuration:10
                                                 lock:self.lock];
 }
 
@@ -336,7 +340,7 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
     
     if(bitrate) {
         if([self isSupportPropertyWithSession:session key:kVTCompressionPropertyKey_AverageBitRate]) {
-            int value = bitrate << 10;
+            int value = bitrate;
             CFNumberRef ref = CFNumberCreate(NULL, kCFNumberSInt32Type, &value);
             [self setSessionPropertyWithSession:session key:kVTCompressionPropertyKey_AverageBitRate value:ref];
             CFRelease(ref);
@@ -426,12 +430,12 @@ static void EncodeCallBack(void *outputCallbackRefCon,void *souceFrameRefCon,OSS
     
     //the first frame must be iframe then create the reference timeStamp;
     static BOOL isFirstFrame = YES;
-    if(isFirstFrame && g_capture_base_time == 0) {
+    if(isFirstFrame && g_av_base_time == 0) {
         CMTime pts = CMSampleBufferGetPresentationTimeStamp(sampleBuffer);
-        g_capture_base_time = CMTimeGetSeconds(pts);// system absolutly time(s)
-        //        g_capture_base_time = g_tvustartcaptureTime - (ntp_time_offset/1000);
+        g_av_base_time = CMTimeGetSeconds(pts);// system absolutly time(s)
+        //        g_av_base_time = g_tvustartcaptureTime - (ntp_time_offset/1000);
         isFirstFrame = NO;
-        log4cplus_error("Video Encoder:","start capture time = %u",g_capture_base_time);
+        log4cplus_error("Video Encoder:","start capture time = %u",g_av_base_time);
     }
     
     CVImageBufferRef imageBuffer = CMSampleBufferGetImageBuffer(sampleBuffer);

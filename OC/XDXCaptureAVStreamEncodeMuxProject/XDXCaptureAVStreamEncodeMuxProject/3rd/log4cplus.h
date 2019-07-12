@@ -7,7 +7,7 @@
 // Note: Only debug mode will print log. You could also set mode for log level.
 #define kXDXDebugMode
 // XDXLogLevelFatal , XDXLogLevelError , XDXLogLevelWarn , XDXLogLevelInfo , XDXLogLevelDebug
-#define XDXLogLevelFatal
+#define XDXLogLevelInfo
 
 #ifdef kXDXDebugMode
 
